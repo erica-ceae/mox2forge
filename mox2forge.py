@@ -3,7 +3,7 @@ import re
 
 # list of fragments forge seems to struggle with
 # any promo variant using the "P[set]" syntax, e.g. "PDOM" for "DOM" promos
-# bad_words = ["*F*","PLST"]
+# bad_words = ["*E*","*F*","PLST"]
 
 def delist(card):
     card = card.replace("(PLST) ", "(")
@@ -23,6 +23,10 @@ def main():
     for i in range(0, len(list)):
         card = list[i]
         match card:
+            case card if "*E*" in card:
+                list[i] = card.replace("*E*", "")
+                # catch foil promos
+                list[i] = depromo(list[i])
             case card if "*F*" in card:
                 list[i] = card.replace("*F*", "")
                 # catch foil promos
@@ -30,7 +34,6 @@ def main():
             case card if "(PLST)" in card:
                 list[i] = delist(card)
             case card if "(P" in card:
-                print(card)
                 list[i] = depromo(card)
             case _:
                 pass
