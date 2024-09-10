@@ -1,7 +1,7 @@
 import pyperclip
 
 # list of fragments forge seems to struggle with
-# bad_words = ["*F*","PLST"]
+# bad_words = ["*F*","PLST","PDOM"]
 
 def delist(card):
     card = card.replace("(PLST) ", "(")
@@ -17,6 +17,8 @@ for i in range(0, len(list)):
     match card:
         case card if "*F*" in card:
             list[i] = card.replace("*F*", "")
+        case card if "(PDOM)" in card:
+            list[i] = card.replace("(PDOM)", "(DOM)")
         case card if "(PLST)" in card:
             list[i] = delist(card)
         case _:
